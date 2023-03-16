@@ -16,6 +16,13 @@ mongoose
     console.log('DB connectino successfull');
   });
 
+const app = require('./app');
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log('App running on port 3000');
+});
+
 // const tourSchema = new mongoose.Schema({
 //   name: {
 //     type: String,
@@ -45,13 +52,3 @@ mongoose
 //   .catch((err) => {
 //     console.log('error', err);
 //   });
-
-const app = require('./app');
-
-console.log(app.get('env'));
-// console.log(process.env);
-
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log('App running on port 3000');
-});

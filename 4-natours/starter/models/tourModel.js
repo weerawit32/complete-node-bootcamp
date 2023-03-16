@@ -9,7 +9,7 @@ const tourSchema = new mongoose.Schema({
   rating: { type: Number, default: 4.5 },
   price: {
     type: Number,
-    required: [true, 'A tour mush have aprice'],
+    required: [true, 'A tour mush have price'],
   },
 });
 
