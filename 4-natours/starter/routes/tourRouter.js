@@ -5,6 +5,9 @@ const {
   deleteTour,
   updateTour,
   createTour,
+  alistTopTours,
+  getTourStats,
+  getMonthlyPlan,
 } = require('../controllers/tourController');
 
 // const tours = JSON.parse(
@@ -16,6 +19,11 @@ const router = express.Router();
 // Create a checkBody middleware
 // Check if body contain the name and price property
 // If not sent back 400(bad request)
+
+router.route('/top-5-cheap').get(alistTopTours, getAlltours);
+
+router.route('/tour-stats').get(getTourStats);
+router.route('/monthly-plan/:year').get(getMonthlyPlan);
 
 router.route('/').get(getAlltours).post(createTour);
 
