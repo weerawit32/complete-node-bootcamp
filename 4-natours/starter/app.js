@@ -145,6 +145,8 @@ app.use((req, res, next) => {
 // userRouter.route('/').get(getAllUsers).post(createUser);
 // userRouter.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
 
+app.post('/');
+
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 
