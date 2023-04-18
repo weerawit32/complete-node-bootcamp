@@ -1,4 +1,5 @@
 const express = require('express');
+const reviewRouter = require('../routes/reviewRouter');
 const {
   getAlltours,
   getTour,
@@ -10,6 +11,8 @@ const {
   getMonthlyPlan,
 } = require('../controllers/tourController');
 
+// const { createReview } = require('../controllers/reviewController');
+
 const { protect, restrictTo } = require('../controllers/authController');
 
 // const tours = JSON.parse(
@@ -17,6 +20,13 @@ const { protect, restrictTo } = require('../controllers/authController');
 // );
 
 const router = express.Router();
+
+// POST/tours/234fad4/reviews
+// GET/tours/234fad4/reviews
+// GET/tours/234fad4/reviews/asdwd
+// router
+
+router.use('/:tourId/reviews', reviewRouter);
 
 // Create a checkBody middleware
 // Check if body contain the name and price property
