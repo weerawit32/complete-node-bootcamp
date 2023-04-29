@@ -93,8 +93,6 @@ exports.protect = catchAsync(async (req, res, next) => {
     );
   }
 
-  // console.log('token', token);
-
   // 2) Verification token
   const verifyToken = new Promise((resolve, reject) => {
     jwt.verify(token, process.env.JWT_SECRET, (err, res) => {
@@ -109,6 +107,8 @@ exports.protect = catchAsync(async (req, res, next) => {
   // .catch((err) => console.error('err', err));
   //3) Check if user still exist
   const currentUser = await User.findById(decoded.id);
+
+  console.log('cur', currentUser);
 
   if (!currentUser) {
     return next(

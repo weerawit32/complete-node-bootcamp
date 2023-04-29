@@ -5,23 +5,19 @@ const factory = require('./handlerFactory');
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
-  Objecy.keys(obj).forEach((el) => {
-    if (allowedFields.includeds(el)) {
+  Object.keys(obj).forEach((el) => {
+    if (allowedFields.includes(el)) {
       newObj[el] = obj[el];
     }
   });
   return newObj;
 };
 
-exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.find();
+exports.getMe = (req, res, next) => {
+  req.params.id = req.user.id;
 
-  res.status(200).json({
-    status: 'success',
-    result: users.length,
-    data: users,
-  });
-});
+  next();
+};
 
 exports.updateMe = catchAsync(async (req, res, next) => {
   //1) Create error if user Post password data
@@ -33,9 +29,9 @@ exports.updateMe = catchAsync(async (req, res, next) => {
       )
     );
   }
-
-  //2) update user document
+  // 2) Filter to have wanted field
   const filteredBody = filterObj(req.body, 'name', 'email');
+  //3) update user document
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
     runValidators: true,
@@ -58,22 +54,16 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getUser = (req, res) => {
-  // res.status(500).json({
-  //   status: 'error',
-  //   message: 'This route is not yet defined!',
-  // });
-};
 exports.createUser = (req, res) => {
-  // res.status(500).json({
-  //   status: 'error',
-  //   message: 'This route is not yet defined!',
-  // });
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not yet defined! please ue signup instead',
+  });
 };
-exports.updateUser = (req, res) => {
-  // res.status(500).json({
-  //   status: 'error',
-  //   message: 'This route is not yet defined!',
-  // });
-};
+
+// do not update password here
+exports.getAllUsers = factory.getAll(User);
+exports.getUser = factory.getOne(User);
+
+exports.updateUser = factory.updateOne(User);
 exports.deleteUser = factory.deleteOne(User);
